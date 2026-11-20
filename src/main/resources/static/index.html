@@ -1,59 +1,210 @@
 <!-- hash-identificacao: c3351ceb494693272b867fe0b6b879af6574db70f6bc2ef1ceb36ad51ba7c60f -->
-<!--
-  Arquivo gerado automaticamente pelo TADS Spring Initializr customizado (versão didática).
-  ATENÇÃO: Este arquivo NÃO é gerado pelo Spring Initializr oficial.
--->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GerenciadorDeJogos</title>
-  <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 720px; margin: 2.5rem auto; padding: 0 1.25rem 5rem; color: #333; line-height: 1.6; }
-    h1 { color: #6db33f; border-bottom: 2px solid #6db33f; padding-bottom: 0.4rem; margin-bottom: 0.25rem; }
-    h2 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-top: 2rem; margin-bottom: 0.5rem; }
-    a { color: #6db33f; }
-    ul { padding-left: 1.5rem; margin: 0; }
-    li { margin: 0.35rem 0; }
-    .meta { background: #f6f8f6; border: 1px solid #d4e8c4; border-radius: 6px; padding: 1rem 1.25rem; font-size: 0.875rem; }
-    .hash { font-family: monospace; font-size: 0.78rem; word-break: break-all; color: #666; margin: 0.25rem 0 0; }
-    .generated { font-size: 0.8rem; color: #999; margin-top: 0.5rem; }
-    .curiosity { background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid #f59e0b; border-radius: 4px; padding: 0.75rem 1rem; margin-top: 2rem; font-size: 0.875rem; color: #78450e; }
-    .curiosity strong { display: block; margin-bottom: 0.25rem; }
-    .site-footer { position: fixed; bottom: 0; left: 0; right: 0; background: #1e2d1e; color: #7a9a7a; font-size: 0.75rem; text-align: center; padding: 0.6rem 1rem; border-top: 1px solid #2e4a2e; }
-    .site-footer a { color: #6db33f; text-decoration: none; }
-    .site-footer a:hover { text-decoration: underline; }
-  </style>
+  <title>Gerenciador de Jogos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>GerenciadorDeJogos</h1>
-  <p>Projeto final de Desenvolvimento de Sistemas Web</p>
+<main class="container">
+  <h1>Jogos</h1>
+  <a href="form.html">+ Cadastrar novo jogo</a>
 
-  <h2>Links de apoio do projeto</h2>
-  <ul>
+  <section class="card">
+    <h2>Lista de Jogos</h2>
+    <button id="btnListar">Carregar lista</button>
+    <div class="tabela-wrap">
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th><th>Título</th><th>Plataforma</th><th>Lançamento</th><th>Disponível</th><th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="corpoTabela"></tbody>
+      </table>
+    </div>
+  </section>
 
-    <li><a href="https://github.com/ftsuda-senac/dicas-desenvolvimento/blob/main/Dicas-e-Tutoriais-Spring.md" target="_blank" rel="noopener noreferrer">Dicas e Tutoriais Spring</a></li>
-  </ul>
+  <section class="card" id="secaoEdicao" style="display:none">
+    <h2>Editar Jogo: <span id="editTitulo"></span></h2>
+    <form id="formEdicao">
+      <div class="campo">
+        <label for="editPlataforma">Plataforma:</label>
+        <input type="text" id="editPlataforma" required maxlength="100" />
+      </div>
+      <div class="campo">
+        <label for="editDataLancamento">Data de Lançamento:</label>
+        <input type="date" id="editDataLancamento" required />
+      </div>
+      <div class="campo">
+        <label class="check"><input type="checkbox" id="editDisponivel" /> Disponível</label>
+      </div>
+      <div class="campo">
+        <label for="editObservacoes">Observações:</label>
+        <textarea id="editObservacoes" maxlength="500" rows="3"></textarea>
+      </div>
+      <div class="botoes-form">
+        <button type="submit">Salvar alterações</button>
+        <button type="button" class="secundario" onclick="fecharFormEdicao()">Cancelar</button>
+      </div>
+    </form>
+  </section>
 
-  <div class="curiosity">
-    <strong>🔍 Para pesquisar:</strong>
-    Por que esta página se chama <code>index.html</code>?
-  </div>
+  <section class="card">
+    <h2>Buscar jogo pelo título</h2>
+    <div class="acoes-topo">
+      <button class="btnBusca secundario" data-titulo="Forza Horizon 67">Carregar Forza Horizon 67</button>
+      <button class="btnBusca secundario" data-titulo="GOW Ragnarok">Carregar GOW Ragnarok</button>
+      <button class="btnBusca secundario" data-titulo="Fortnite">Carregar Fortnite</button>
+    </div>
+    <article>
+      <h3 id="titulo">Título</h3>
+      <p>ID: <strong id="id"></strong></p>
+      <p>Plataforma: <strong id="plataforma"></strong></p>
+      <p>Data de Lançamento: <strong id="dataLancamento"></strong></p>
+      <p>Disponível: <strong id="disponivel"></strong></p>
+      <p>Observações: <strong id="observacoes"></strong></p>
+    </article>
+  </section>
 
-  <h2>Identificação do projeto</h2>
-  <div class="meta">
-    <strong>Desenvolvedores:</strong>
-    <ul>
-      <li>Rodrigo Melo Theodoro</li>
-      <li>Pedro Henrique Gomes Martins</li>
-    </ul>
-    <p class="hash"><strong>hash-identificacao:</strong> c3351ceb494693272b867fe0b6b879af6574db70f6bc2ef1ceb36ad51ba7c60f</p>
-    <p class="generated">Gerado em: 11/11/2026, 15:34:05</p>
-  </div>
+  <p class="rodape">Desenvolvedores: Rodrigo Melo Theodoro e Pedro Henrique Gomes Martins</p>
+</main>
 
-  <footer class="site-footer">
-    Gerado pelo <a href="https://ftsuda-senac.github.io/tads-spring-initializr/" target="_blank" rel="noopener noreferrer">TADS Spring Initializr</a> — v1.1.8
-  </footer>
+<script>
+  // Evita que texto digitado pelo usuário seja interpretado como HTML ao montar a tabela
+  function esc(texto) {
+    return String(texto ?? '').replace(/[&<>"']/g, c => (
+      { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+
+  // Buscar e exibir a lista de jogos
+  document.getElementById('btnListar').addEventListener('click', async () => {
+    try {
+      const httpResp = await fetch('/jogos');
+      if (!httpResp.ok) {
+        throw new Error('Erro HTTP ' + httpResp.status);
+      }
+      const jogos = await httpResp.json();
+      const tbody = document.getElementById('corpoTabela');
+      tbody.innerHTML = '';
+      for (const j of jogos) {
+        tbody.insertAdjacentHTML('beforeend',
+          `<tr>
+              <td>${esc(j.id)}</td>
+              <td>${esc(j.titulo)}</td>
+              <td>${esc(j.plataforma)}</td>
+              <td>${esc(j.dataLancamento)}</td>
+              <td>${j.disponivel
+            ? '<span class="badge sim">Sim</span>'
+            : '<span class="badge nao">Não</span>'}</td>
+              <td class="acoes">
+                <button class="btnEditar pequeno secundario" data-titulo="${esc(j.titulo)}">Editar</button>
+                <button class="btnExcluir pequeno perigo" data-titulo="${esc(j.titulo)}">Excluir</button>
+              </td>
+            </tr>`
+        );
+      }
+    } catch (err) {
+      alert('Erro ao carregar lista: ' + err.message);
+    }
+  });
+
+  // Botões Editar/Excluir são criados dinamicamente: delegação de evento na tabela
+  document.getElementById('corpoTabela').addEventListener('click', (evt) => {
+    const btn = evt.target.closest('button');
+    if (!btn) return;
+    if (btn.classList.contains('btnEditar')) abrirFormEdicao(btn.dataset.titulo);
+    if (btn.classList.contains('btnExcluir')) excluirJogo(btn.dataset.titulo);
+  });
+
+  // encodeURIComponent é necessário porque títulos têm espaços (ex.: "GOW Ragnarok")
+  async function getJogo(titulo) {
+    try {
+      const httpResp = await fetch(`/jogos/${encodeURIComponent(titulo)}`);
+      if (!httpResp.ok) {
+        throw new Error('Erro HTTP ' + httpResp.status);
+      }
+      const j = await httpResp.json();
+      document.getElementById('titulo').textContent = j.titulo;
+      document.getElementById('id').textContent = j.id;
+      document.getElementById('plataforma').textContent = j.plataforma;
+      document.getElementById('dataLancamento').textContent = j.dataLancamento;
+      document.getElementById('disponivel').textContent = j.disponivel ? 'Sim' : 'Não';
+      document.getElementById('observacoes').textContent = j.observacoes ?? '';
+    } catch (err) {
+      alert('Erro ao buscar jogo: ' + err.message);
+    }
+  }
+
+  for (const btn of document.querySelectorAll('.btnBusca')) {
+    btn.addEventListener('click', () => getJogo(btn.dataset.titulo));
+  }
+
+  // Busca os dados atuais e pré-preenche o formulário de edição
+  async function abrirFormEdicao(titulo) {
+    const httpResp = await fetch(`/jogos/${encodeURIComponent(titulo)}`);
+    if (!httpResp.ok) {
+      alert('Não foi possível carregar os dados para edição.');
+      return;
+    }
+    const j = await httpResp.json();
+    document.getElementById('editTitulo').textContent = titulo;
+    document.getElementById('editPlataforma').value = j.plataforma ?? '';
+    document.getElementById('editDataLancamento').value = j.dataLancamento;
+    document.getElementById('editDisponivel').checked = !!j.disponivel;
+    document.getElementById('editObservacoes').value = j.observacoes ?? '';
+
+    // Armazena o título no formulário para usar no submit
+    document.getElementById('formEdicao').dataset.titulo = titulo;
+    document.getElementById('secaoEdicao').style.display = 'block';
+  }
+
+  function fecharFormEdicao() {
+    document.getElementById('secaoEdicao').style.display = 'none';
+  }
+
+  document.getElementById('formEdicao').addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const titulo = evt.target.dataset.titulo;
+
+    const dados = {
+      plataforma: document.getElementById('editPlataforma').value,
+      dataLancamento: document.getElementById('editDataLancamento').value,
+      disponivel: document.getElementById('editDisponivel').checked,
+      observacoes: document.getElementById('editObservacoes').value,
+    };
+
+    const resp = await fetch(`/jogos/${encodeURIComponent(titulo)}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dados),
+    });
+
+    if (resp.ok) {
+      alert('Jogo alterado com sucesso!');
+      fecharFormEdicao();
+      document.getElementById('btnListar').click(); // recarrega a tabela
+    } else {
+      alert('Erro ao alterar: HTTP ' + resp.status);
+    }
+  });
+
+  async function excluirJogo(titulo) {
+    const confirmado = window.confirm(
+      `Deseja realmente excluir "${titulo}"?\nEsta ação não pode ser desfeita.`
+    );
+    if (!confirmado) return;
+
+    const resp = await fetch(`/jogos/${encodeURIComponent(titulo)}`, { method: 'DELETE' });
+    if (resp.ok) {
+      alert('Jogo excluído com sucesso!');
+      document.getElementById('btnListar').click(); // recarrega a tabela
+    } else {
+      alert('Erro ao excluir: HTTP ' + resp.status);
+    }
+  }
+</script>
 </body>
 </html>

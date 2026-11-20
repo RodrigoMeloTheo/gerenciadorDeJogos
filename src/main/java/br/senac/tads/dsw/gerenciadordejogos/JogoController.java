@@ -1,7 +1,8 @@
 package br.senac.tads.dsw.gerenciadordejogos;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ProblemDetail;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -12,13 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 
 @RestController
@@ -32,13 +27,13 @@ public class JogoController {
     }
 
     @GetMapping
-    public List<Jogo> obterJogos() {
+    public List<JogoDto> obterJogos() {
         return jogoService.obterJogos();
     }
 
     @GetMapping("/{titulo}")
-    public Jogo obterJogo(@PathVariable("titulo") String titulo) {
-        Optional<Jogo> optJogo = jogoService.obterJogo(titulo);
+    public JogoDto obterJogo(@PathVariable("titulo") String titulo) {
+        Optional<JogoDto> optJogo = jogoService.obterJogo(titulo);
         if(optJogo.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -46,20 +41,38 @@ public class JogoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> incluirJogo(@RequestBody @Valid Jogo jogo){
+    public ResponseEntity<?> incluirJogo(@RequestBody @Valid JogoDto jogoDto){
 
-        jogoService.incluirNovoJogo(jogo);
-        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/jogos/{titulo}").buildAndExpand(jogo.getTitulo()).toUri();
+        jogoService.incluirNovoJogo(jogoDto);
+        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/jogos/{titulo}").buildAndExpand(jogoDto.getTitulo()).toUri();
 
         return ResponseEntity.created(location).build();
 
     }
-    
 
-  
-    
-    
-    
+	@PutMapping("/{titulo}")
+	public ResponseEntity<?> atualizar(@PathVariable("titulo") String titulo, @RequestBody @Valid JogoAlteracaoDto jogo){
+		JogoDto jogoAlterado = jogoService.alterarJogo(titulo, jogo);
+		return ResponseEntity.ok().body(jogoAlterado);
+	}
+
+	@DeleteMapping("/{titulo}")
+	public ResponseEntity<?> remover(@PathVariable("titulo") String titulo){
+		jogoService.removerJogo(titulo);
+		return ResponseEntity.noContent().build();
+	}
+
+	@ExceptionHandler(NaoEncontradoException.class)
+	public ResponseEntity<ProblemDetail> tratarExcecao(NaoEncontradoException ex) {
+		// ProblemDetail - padrão RFC 7807 para representar erros HTTP
+		ProblemDetail pd = ProblemDetail.forStatusAndDetail(
+			HttpStatusCode.valueOf(404), ex.getMessage());
+		return ResponseEntity.of(pd).build();
+	}
+
+
+
+
 
 
 

@@ -12,34 +12,57 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 
-@Service 
+@Service
 public class JogoService {
 
     private AtomicInteger contador = new AtomicInteger(0);
 
-    private Map<String, Jogo> mapJogos = new ConcurrentHashMap<>();
+    private Map<String, JogoDto> mapJogos = new ConcurrentHashMap<>();
 
-    @PostConstruct 
+    @PostConstruct
     public void init(){
-        mapJogos.put("Forza Horizon 67", new Jogo(contador.incrementAndGet(), "Forza Horizon 67", LocalDate.parse("2026-10-20"), "Xbox", true, "teste"));
-        mapJogos.put("GOW Ragnarok", new Jogo(contador.incrementAndGet(), "GOW Ragnarok", LocalDate.parse("2024-10-20"), "playstation" , true, "teste"));
-        mapJogos.put("Fortnite", new Jogo(contador.incrementAndGet(), "Fortnite", LocalDate.parse("2017-10-20"), "qualquer",true, "teste"));
+        mapJogos.put("Forza Horizon 67", new JogoDto(contador.incrementAndGet(), "Forza Horizon 67", LocalDate.parse("2026-10-20"), "Xbox", true, "teste"));
+        mapJogos.put("GOW Ragnarok", new JogoDto(contador.incrementAndGet(), "GOW Ragnarok", LocalDate.parse("2024-10-20"), "playstation" , true, "teste"));
+        mapJogos.put("Fortnite", new JogoDto(contador.incrementAndGet(), "Fortnite", LocalDate.parse("2017-10-20"), "qualquer",true, "teste"));
     }
 
-    public List<Jogo> obterJogos(){
+    public List<JogoDto> obterJogos(){
         return new ArrayList<>(mapJogos.values());
     }
 
-    public Optional<Jogo> obterJogo(String titulo){
+    public Optional<JogoDto> obterJogo(String titulo){
         return Optional.ofNullable(mapJogos.get(titulo));
     }
 
-    public Jogo incluirNovoJogo(Jogo jogo){
+    public JogoDto incluirNovoJogo(JogoDto jogoDto){
 
-        jogo.setId(contador.incrementAndGet());
-        mapJogos.put(jogo.getTitulo(), jogo);
-        return jogo;
+        jogoDto.setId(contador.incrementAndGet());
+        mapJogos.put(jogoDto.getTitulo(), jogoDto);
+        return jogoDto;
     }
 
- 
+	public JogoDto alterarJogo(String titulo, JogoAlteracaoDto jogoAlteracaoDto){
+		if (!mapJogos.containsKey(titulo)){
+			throw new NaoEncontradoException("Jogo " + titulo + " não encontrado");
+		}
+
+		JogoDto jogoOriginal = mapJogos.get(titulo);
+		jogoOriginal.setDataLancamento(jogoAlteracaoDto.getDataLancamento());
+		jogoOriginal.setDisponivel(jogoAlteracaoDto.getDisponivel());
+		jogoOriginal.setPlataforma(jogoAlteracaoDto.getPlataforma());
+		jogoOriginal.setObservacoes(jogoAlteracaoDto.getObservacoes());
+
+		return jogoOriginal;
+
+	}
+
+	public void removerJogo(String titulo){
+		if (!mapJogos.containsKey(titulo)){
+			throw new NaoEncontradoException("Jogo " + titulo + " não encontrado");
+		}
+
+		mapJogos.remove(titulo);
+	}
+
+
 }

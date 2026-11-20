@@ -1,14 +1,13 @@
 package br.senac.tads.dsw.gerenciadordejogos;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
-public class Jogo {
+public class JogoDto {
 
     private Integer id;
 
@@ -20,25 +19,25 @@ public class Jogo {
     @PastOrPresent //Data no passado ou igual a hoje
     private LocalDate dataLancamento;
 
-    @NotBlank 
+    @NotBlank
     @Size (max = 100)
     private String plataforma;
 
-    @NotNull  // usei ia aqui, pra validar boolean o claude disse que eu preciso usar um Boolean com b maiusculo para dar certyo 
+    @NotNull  // usei ia aqui, pra validar boolean o claude disse que eu preciso usar um Boolean com b maiusculo para dar certyo
     private Boolean disponivel;
 
     @Size (max = 500)
     private String observacoes;
 
 
-    public Jogo() {
+    public JogoDto() {
     }
 
-    
 
 
-    public Jogo(Integer id, String titulo, LocalDate dataLancamento, String plataforma, Boolean disponivel,
-            String observacoes) {
+
+    public JogoDto(Integer id, String titulo, LocalDate dataLancamento, String plataforma, Boolean disponivel,
+				   String observacoes) {
         this.id = id;
         this.titulo = titulo;
         this.dataLancamento = dataLancamento;
@@ -90,7 +89,7 @@ public class Jogo {
     }
 
 
-    public Boolean isDisponivel() {
+    public Boolean getDisponivel() {
         return disponivel;
     }
 
@@ -109,8 +108,8 @@ public class Jogo {
         this.observacoes = observacoes;
     }
 
-    
 
-    
+
+
 
 }
