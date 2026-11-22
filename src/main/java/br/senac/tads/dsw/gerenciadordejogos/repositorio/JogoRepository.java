@@ -10,7 +10,7 @@ import br.senac.tads.dsw.gerenciadordejogos.entidade.JogoEntity;
 @Repository //nem usa, mas é legal
 public interface JogoRepository  extends JpaRepository <JogoEntity, Integer>{
 
-    Optional<JogoRepository> findByTitulo(String titulo);
+    Optional<JogoEntity> findByTitulo(String titulo);
 
     boolean existsByTitulo(String titulo);
 

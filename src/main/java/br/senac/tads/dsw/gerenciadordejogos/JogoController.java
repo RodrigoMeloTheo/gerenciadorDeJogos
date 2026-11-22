@@ -20,9 +20,9 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/jogos")
 public class JogoController {
 
-    private final JogoService jogoService;
+    private final JogoServiceMapImpl jogoService;
 
-    public JogoController(JogoService jogoService){
+    public JogoController(JogoServiceMapImpl jogoService){
         this.jogoService = jogoService;
     }
 
