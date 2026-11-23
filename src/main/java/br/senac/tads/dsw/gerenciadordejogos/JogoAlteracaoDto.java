@@ -1,5 +1,6 @@
 package br.senac.tads.dsw.gerenciadordejogos;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 public class JogoAlteracaoDto {
 
 	@NotNull
-	@PastOrPresent
-	private LocalDate dataLancamento;
+	@Min(value = 1950, message = "O ano deve ser 1950 ou maior")
+	private Integer dataLancamento;
 
 	@NotBlank
 	@Size(max = 100)
@@ -26,11 +27,11 @@ public class JogoAlteracaoDto {
 	public JogoAlteracaoDto() {
 	}
 
-	public LocalDate getDataLancamento() {
+	public Integer getDataLancamento() {
 		return dataLancamento;
 	}
 
-	public void setDataLancamento(LocalDate dataLancamento) {
+	public void setDataLancamento(Integer dataLancamento) {
 		this.dataLancamento = dataLancamento;
 	}
 

@@ -11,6 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
 @Entity 
 @Table (name = "tb_jogos")
@@ -28,7 +30,8 @@ public class JogoEntity {
     private String titulo;
 
     @Column (name = "data_lancamento")
-    private LocalDate dataLancamento;
+    @Min(value = 1950, message = "O ano deve ser 1950 ou maior")
+    private Integer dataLancamento;
 
     @Column (nullable = false, length = 100)
     private String plataforma;
@@ -55,11 +58,11 @@ public class JogoEntity {
         this.titulo = titulo;
     }
 
-    public LocalDate getDataLancamento() {
+    public Integer getDataLancamento() {
         return dataLancamento;
     }
 
-    public void setDataLancamento(LocalDate dataLancamento) {
+    public void setDataLancamento(Integer dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
 

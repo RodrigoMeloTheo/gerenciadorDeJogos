@@ -21,9 +21,9 @@ public class JogoServiceMapImpl implements JogoService{
 
     @PostConstruct
     public void init(){
-        mapJogos.put("Forza Horizon 67", new JogoDto(contador.incrementAndGet(), "Forza Horizon 67", LocalDate.parse("2026-10-20"), "Xbox", true, "teste"));
-        mapJogos.put("GOW Ragnarok", new JogoDto(contador.incrementAndGet(), "GOW Ragnarok", LocalDate.parse("2024-10-20"), "playstation" , true, "teste"));
-        mapJogos.put("Fortnite", new JogoDto(contador.incrementAndGet(), "Fortnite", LocalDate.parse("2017-10-20"), "qualquer",true, "teste"));
+        mapJogos.put("Forza Horizon 67", new JogoDto(contador.incrementAndGet(), "Forza Horizon 67", 2025, "Xbox", true, "teste"));
+        mapJogos.put("GOW Ragnarok", new JogoDto(contador.incrementAndGet(), "GOW Ragnarok", 2024, "playstation" , true, "teste"));
+        mapJogos.put("Fortnite", new JogoDto(contador.incrementAndGet(), "Fortnite", 2017, "qualquer",true, "teste"));
     }
 
     @Override

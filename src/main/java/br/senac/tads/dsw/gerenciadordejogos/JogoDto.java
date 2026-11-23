@@ -2,6 +2,7 @@ package br.senac.tads.dsw.gerenciadordejogos;
 
 import java.time.LocalDate;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -16,8 +17,8 @@ public class JogoDto {
     private String titulo;
 
     @NotNull //Não nulo (funciona para qualquer tipo, não só String)
-    @PastOrPresent //Data no passado ou igual a hoje
-    private LocalDate dataLancamento;
+    @Min(value = 1950, message = "O ano deve ser 1950 ou maior")
+    private Integer dataLancamento;
 
     @NotBlank
     @Size (max = 100)
@@ -36,7 +37,7 @@ public class JogoDto {
 
 
 
-    public JogoDto(Integer id, String titulo, LocalDate dataLancamento, String plataforma, Boolean disponivel,
+    public JogoDto(Integer id, String titulo, Integer dataLancamento, String plataforma, Boolean disponivel,
 				   String observacoes) {
         this.id = id;
         this.titulo = titulo;
@@ -69,12 +70,12 @@ public class JogoDto {
     }
 
 
-    public LocalDate getDataLancamento() {
+    public Integer getDataLancamento() {
         return dataLancamento;
     }
 
 
-    public void setDataLancamento(LocalDate dataLancamento) {
+    public void setDataLancamento(Integer dataLancamento) {
         this.dataLancamento = dataLancamento;
     }
 
