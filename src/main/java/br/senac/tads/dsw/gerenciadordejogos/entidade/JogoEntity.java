@@ -26,7 +26,7 @@ public class JogoEntity {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column (nullable = false, unique = true, length = 64) //not null e unica
+    @Column (nullable = false, unique = true, length = 50) //not null e unica
     private String titulo;
 
     @Column (name = "data_lancamento")

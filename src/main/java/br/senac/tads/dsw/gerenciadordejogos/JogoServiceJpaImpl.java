@@ -80,8 +80,13 @@ public class JogoServiceJpaImpl implements JogoService{
     @Transactional
     public JogoDto incluirNovoJogo(JogoDto dto){
         JogoEntity entity = toEntity(dto);
-        JogoEntity salva = jogoRepository.save(entity);
-        return toDto(salva);
+        
+        if (!jogoRepository.existsByTitulo(dto.getTitulo())) {
+            JogoEntity salva = jogoRepository.save(entity);
+        return toDto(salva);            
+        }
+         throw new NaoEncontradoException("o jogo "+ dto.getTitulo() + " ja está cadastrado");  
+        
     }
 
 

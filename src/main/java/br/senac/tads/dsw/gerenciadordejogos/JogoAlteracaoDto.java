@@ -21,7 +21,7 @@ public class JogoAlteracaoDto {
 	@NotNull
 	private boolean disponivel;
 
-	@Size(max = 50)
+	@Size(max = 500)
 	private String observacoes;
 
 	public JogoAlteracaoDto() {

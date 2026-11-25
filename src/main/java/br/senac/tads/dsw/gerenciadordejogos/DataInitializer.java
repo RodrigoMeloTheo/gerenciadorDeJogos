@@ -21,32 +21,7 @@ public class DataInitializer implements CommandLineRunner{
     @Transactional 
     public void run(String... args) throws Exception{
          if (jogoRepository.count() == 0){
-            JogoEntity j1 = new JogoEntity();
-            j1.setTitulo("Resident Evil 2 Remake");
-            j1.setDataLancamento(2020);
-            j1.setPlataforma("Xbox, Playstation, PC");
-            j1.setDisponivel(true);
-            j1.setObservacoes("teste");
-            jogoRepository.save(j1);
-
-            
-            JogoEntity j2 = new JogoEntity();
-            j2.setTitulo("Elden Ring");
-            j2.setDataLancamento(2022);
-            j2.setPlataforma("Xbox, Playstation, PC");
-            j2.setDisponivel(true);
-            j2.setObservacoes("");
-            jogoRepository.save(j2);
-
-
-            
-            JogoEntity j3 = new JogoEntity();
-            j3.setTitulo("Castlevania");
-            j3.setDataLancamento(1998);
-            j3.setPlataforma("Xbox, Playstation, PC, nintendo");
-            j3.setDisponivel(false);
-            j3.setObservacoes(" ");
-            jogoRepository.save(j3);
+          
 
 
          }
