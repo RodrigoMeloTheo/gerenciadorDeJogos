@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 
+//essa classe representa a tabela do banco de dados, a execução é realizada pelo hibernate
+
 @Entity 
 @Table (name = "tb_jogos")
 public class JogoEntity {

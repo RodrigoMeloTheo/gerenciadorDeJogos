@@ -67,8 +67,8 @@
       limparErros();
 
       
-         const numValido = dataLancamento.validity.badInput// usei ia aqui para descobrir como verificar se o campo é compativel, o tipo deve ser inteiro, porém, se vc digita um texto ele le como nulo
-         if(numValido){                                    //O validity.badinput analisa se o campo recebe o valor correto
+         const numValido = dataLancamento.validity.badInput// usei ia aqui para descobrir como verificar se o campo é compativel, o tipo deve ser inteiro, porém, se vc digita um texto ele le como nulo na conversao
+         if(numValido){                                    //O validity.badInput analisa se o campo recebe o valor correto
           document.getElementById('err-dataLancamento').textContent = 'O ano deve ser um NUMERO';
           return;
          }

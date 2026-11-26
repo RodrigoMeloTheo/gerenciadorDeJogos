@@ -7,7 +7,10 @@ import org.springframework.stereotype.Repository;
 
 import br.senac.tads.dsw.gerenciadordejogos.entidade.JogoEntity;
 
-@Repository //nem usa, mas é legal
+//  JpaRepository<Entidade, TipoDoId> é uma interface do Spring Data JPA que herda de outras classes
+// Ao estendê-la, o repositório ganha automaticamente uma série de operações prontas
+
+@Repository //nem usa, mas é semanticamente bom 
 public interface JogoRepository  extends JpaRepository <JogoEntity, Integer>{
 
     Optional<JogoEntity> findByTitulo(String titulo);

@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import br.senac.tads.dsw.gerenciadordejogos.entidade.JogoEntity;
 import br.senac.tads.dsw.gerenciadordejogos.repositorio.JogoRepository;
 
+///
+/// o jogoservicejpaimpl implementação do crud com o banco de dados, no caso, se relaciona com o entity para realização das operações, convertentdo dto para entity e vice versa, assim, permitindo que os dados fiquem no banco e sejam retornados pra aplicação como dto
+/// 
+
 @Primary 
 @Service 
 public class JogoServiceJpaImpl implements JogoService{

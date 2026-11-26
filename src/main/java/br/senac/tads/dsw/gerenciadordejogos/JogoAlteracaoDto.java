@@ -8,9 +8,11 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
+//classe criada para representar os dados editaveis (titulo por exemplo nao é editavel)
+
 public class JogoAlteracaoDto {
 
-	@NotNull
+	@NotNull // de acordo com a etapa 3, nao necessariamente esass anotacoes fazem sentido na alteracao
 	@Min(value = 1950, message = "O ano deve ser 1950 ou maior")
 	private Integer dataLancamento;
 

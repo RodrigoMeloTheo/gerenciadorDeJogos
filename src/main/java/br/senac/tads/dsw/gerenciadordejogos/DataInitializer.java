@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.senac.tads.dsw.gerenciadordejogos.entidade.JogoEntity;
 import br.senac.tads.dsw.gerenciadordejogos.repositorio.JogoRepository;
 
+//simplesmente serve para inserir dados inciiais no banco
+
 @Component 
 public class DataInitializer implements CommandLineRunner{
     private final JogoRepository jogoRepository;

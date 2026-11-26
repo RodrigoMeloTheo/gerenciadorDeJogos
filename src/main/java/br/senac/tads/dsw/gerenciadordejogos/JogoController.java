@@ -15,7 +15,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
+// essa classe serve para criar os endpoints de cada funcao do crud
 @RestController
 @RequestMapping("/jogos")
 public class JogoController {

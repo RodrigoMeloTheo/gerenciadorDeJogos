@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 
+//mapimpl serve para manipulacao e armazenamento de dados locais com o map, nao é utilizado no momento
+
 @Service
 public class JogoServiceMapImpl implements JogoService{
 

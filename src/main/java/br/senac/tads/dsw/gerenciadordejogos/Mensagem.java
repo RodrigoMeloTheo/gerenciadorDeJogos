@@ -1,5 +1,5 @@
 package br.senac.tads.dsw.gerenciadordejogos;
-
+//teste
 public class Mensagem {
 
     private String nome;

@@ -8,6 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
+
+//JogoDto é a classe do objeto JOGO, é uma dto pois os dados vao ser transferidos (data trasfer Object). Ela quem define as validacoes de cada atributo 
+
+
 public class JogoDto {
 
     private Integer id;
