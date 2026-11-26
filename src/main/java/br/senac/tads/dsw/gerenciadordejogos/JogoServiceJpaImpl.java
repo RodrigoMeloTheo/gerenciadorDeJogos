@@ -85,7 +85,7 @@ public class JogoServiceJpaImpl implements JogoService{
             JogoEntity salva = jogoRepository.save(entity);
         return toDto(salva);            
         }
-         throw new NaoEncontradoException("o jogo "+ dto.getTitulo() + " ja está cadastrado");  
+         throw new NaoEncontradoException("o jogo "+ dto.getTitulo() + " já está cadastrado");  
         
     }
 

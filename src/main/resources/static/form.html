@@ -1,112 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro de Jogos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-<main class="container estreito">
-  <h1>Cadastro de Jogo</h1>
-  <a href="index.html">← Voltar para a lista</a>
+  <main class="container estreito">
+    <h1>Cadastro de Jogo</h1>
+    <a href="index.html">← Voltar para a lista</a>
 
-  <form id="jogoForm" class="card" novalidate>
-    <div class="campo">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" name="titulo" required maxlength="50" />
-      <p id="err-titulo" class="error-msg"></p>
-    </div>
+    <form id="jogoForm" class="card" novalidate>
+      <div class="campo">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required maxlength="50" />
+        <p id="err-titulo" class="error-msg"></p>
+      </div>
 
-    <div class="campo">
-      <label for="plataforma">Plataforma:</label>
-      <input type="text" id="plataforma" name="plataforma" required maxlength="100" />
-      <p id="err-plataforma" class="error-msg"></p>
-    </div>
+      <div class="campo">
+        <label for="plataforma">Plataforma:</label>
+        <input type="text" id="plataforma" name="plataforma" required maxlength="100" />
+        <p id="err-plataforma" class="error-msg"></p>
+      </div>
 
-    <div class="campo">
-      <label for="dataLancamento">Data de Lançamento:</label>
-      <input type="text" id="dataLancamento" name="dataLancamento" required />
-      <p id="err-dataLancamento" class="error-msg"></p>
-    </div>
+      <div class="campo">
+        <label for="dataLancamento">Ano de Lançamento:</label>
+        <input type="number" id="dataLancamento" name="dataLancamento" min="1950" required />
+        <p id="err-dataLancamento" class="error-msg"></p>
+      </div>
 
-    <div class="campo">
-      <label class="check"><input type="checkbox" id="disponivel" name="disponivel" /> Disponível</label>
-      <p id="err-disponivel" class="error-msg"></p>
-    </div>
+      <div class="campo">
+        <label class="check"><input type="checkbox" id="disponivel" name="disponivel" /> Disponível</label>
+        <p id="err-disponivel" class="error-msg"></p>
+      </div>
 
-    <div class="campo">
-      <label for="observacoes">Observações:</label>
-      <textarea id="observacoes" name="observacoes" rows="3" maxlength="500"></textarea>
-      <p id="err-observacoes" class="error-msg"></p>
-    </div>
+      <div class="campo">
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" name="observacoes" rows="3" maxlength="500"></textarea>
+        <p id="err-observacoes" class="error-msg"></p>
+      </div>
 
-    <div class="botoes-form">
-      <button type="submit">Cadastrar Jogo</button>
-    </div>
-  </form>
+      <p id="err-jogoRepetido" class="error-msg"></p>
 
-  <p class="rodape">Desenvolvedores: Rodrigo Melo Theodoro / Pedro Henrique Gomes Martins / TADS3NB / 2026 / Usou IA: SIM. Claude (Anthropic): correção de erros de compilação, dependências do pom.xml, explicação de validações, revisão do código e desenvolvimento do estilo</p>
-</main>
+      <div class="botoes-form">
+        <button type="submit">Cadastrar Jogo</button>
+      </div>
+    </form>
 
-<script>
-  // Limita a data de lançamento ao dia atual (a API só aceita datas no passado ou hoje)
-  const hoje = new Date();
-  const ano = hoje.getFullYear();
-  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-  const dia = String(hoje.getDate()).padStart(2, '0');
-  document.getElementById('dataLancamento').setAttribute('max', `${ano}-${mes}-${dia}`);
+  <p class="rodape">Desenvolvedores: Rodrigo Melo Theodoro / Pedro Henrique Gomes Martins / TADS3NB / 2026 / Usou IA: SIM. Claude (Anthropic): correção de erros de compilação (tipo de retorno do findByTitulo declarado errado, imports ausentes), explicação de validações (@NotBlank, @NotNull, @Min, Boolean/Integer) e do tratamento de erros (título duplicado e validity.badInput), revisão do código (Análise de problemas) e desenvolvimento do CSS.</p>
+  
+  </main>
 
-  document.getElementById('jogoForm').addEventListener('submit', async (evt) => {
-    evt.preventDefault();
-    limparErros();
+  <script>
+    // Limita a data de lançamento ao dia atual (a API só aceita datas no passado ou hoje)
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    document.getElementById('dataLancamento').setAttribute('max', `${ano}-${mes}-${dia}`);
 
-    const formEl = evt.target;
+    document.getElementById('jogoForm').addEventListener('submit', async (evt) => {
+      evt.preventDefault();
+      limparErros();
 
-    // Monta o objeto com os dados do formulário
-    const dados = {
-      titulo: formEl.titulo.value,
-      plataforma: formEl.plataforma.value,
-      dataLancamento: formEl.dataLancamento.value,
-      disponivel: formEl.disponivel.checked,
-      observacoes: formEl.observacoes.value,
-    };
+      
+         const numValido = dataLancamento.validity.badInput// usei ia aqui para descobrir como verificar se o campo é compativel, o tipo deve ser inteiro, porém, se vc digita um texto ele le como nulo
+         if(numValido){                                    //O validity.badinput analisa se o campo recebe o valor correto
+          document.getElementById('err-dataLancamento').textContent = 'O ano deve ser um NUMERO';
+          return;
+         }
 
-    try {
-      const response = await fetch('/jogos', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados),
-      });
 
-      if (!response.ok) {
-        const dadosErros = await response.json();
-        if (dadosErros.errors) {
-          exibirErros(dadosErros.errors);
+      const formEl = evt.target;
+
+      // Monta o objeto com os dados do formulário
+      const dados = {
+        titulo: formEl.titulo.value,
+        plataforma: formEl.plataforma.value,
+        dataLancamento: formEl.dataLancamento.value,
+        disponivel: formEl.disponivel.checked,
+        observacoes: formEl.observacoes.value,
+      };
+
+      try {
+        const response = await fetch('/jogos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados),
+        });
+
+        if (!response.ok) {
+          const dadosErros = await response.json();
+          if (dadosErros.errors) {
+            exibirErros(dadosErros.errors);
+          }
+          else {
+            const cadastroRepetido = document.getElementById(`err-jogoRepetido`);
+            if (cadastroRepetido) {
+              cadastroRepetido.textContent = dadosErros.detail;
+            }
+          }
+          return;
         }
-        return;
+
+        alert('Jogo cadastrado com sucesso!');
+        formEl.reset();
+        window.location.href = 'index.html';
+      } catch (error) {
+        alert('Não foi possível conectar ao servidor.');
       }
+    });
 
-      alert('Jogo cadastrado com sucesso!');
-      formEl.reset();
-    } catch (error) {
-      alert('Não foi possível conectar ao servidor.');
+    function limparErros() {
+      document.querySelectorAll('.error-msg').forEach(p => p.textContent = '');
     }
-  });
 
-  function limparErros() {
-    document.querySelectorAll('.error-msg').forEach(p => p.textContent = '');
-  }
 
-  function exibirErros(erros) {
-    // Bean Validation retorna: [{ "field": "titulo", "defaultMessage": "..." }, ...]
-    for (const erro of erros) {
-      const el = document.getElementById(`err-${erro.field}`);
-      if (el) {
-        el.textContent = erro.defaultMessage;
+
+
+    function exibirErros(erros) {
+      // Bean Validation retorna: [{ "field": "titulo", "defaultMessage": "..." }, ...]
+      for (const erro of erros) {
+        const el = document.getElementById(`err-${erro.field}`);
+        if (el) {
+          el.textContent = erro.defaultMessage;
+        }
       }
     }
-  }
-</script>
+  </script>
 </body>
+
 </html>
